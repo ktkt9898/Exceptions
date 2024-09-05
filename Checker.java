@@ -35,7 +35,7 @@ public class Checker {
                 int startRows = lineScanner.nextInt();
                 if (lineScanner.hasNextInt()) {
                     int startCols = lineScanner.nextInt();
-                    lineScanner.nextLine();
+                    System.out.println(lineScanner.nextLine());
 
                     for (int row = 1; row < startRows; row++) {
                         String skip = lineScanner.nextLine();
@@ -70,8 +70,8 @@ public class Checker {
             fileScanner.close();
             return true;
 
-        } catch (NoSuchElementException snee) {
-            System.out.println("No snee Bad");
+        } catch (NoSuchElementException nsee) {
+            System.out.println("No nsee Bad");
             fileScanner.close();
             return false;
 
