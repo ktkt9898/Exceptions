@@ -4,7 +4,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.lang.NumberFormatException;
 
-
 /**
  * This class performs the valid checking of files
  * 
@@ -13,7 +12,7 @@ import java.lang.NumberFormatException;
 public class Checker {
     private String stringFileName;
 
-    public Checker( String fileName) throws FileNotFoundException {
+    public Checker( String fileName ) throws FileNotFoundException {
         readFile( fileName );
     }
 
@@ -21,68 +20,89 @@ public class Checker {
         String error = "";
         this.stringFileName = stringFileName;
 
-        File fileName = new File(stringFileName);
+        File fileName = new File( stringFileName );
 
-        Scanner fileScanner = new Scanner(fileName);
-
-        String line = fileScanner.nextLine();
+        Scanner entireFileScanner = new Scanner( fileName );
 
         // Try to create and open a file
         try {
-            Scanner lineScanner = new Scanner(line);
+            if (entireFileScanner.hasNextInt()) {
+                int startRows = entireFileScanner.nextInt();
+                if (entireFileScanner.hasNextInt()) {
+                    int startCols = entireFileScanner.nextInt();
+                    // System.out.println(originalLineScanner.nextLine());
 
-            if (lineScanner.hasNextInt()) {
-                int startRows = lineScanner.nextInt();
-                if (lineScanner.hasNextInt()) {
-                    int startCols = lineScanner.nextInt();
-                    System.out.println(lineScanner.nextLine());
+                    // Skip trick
+                    entireFileScanner.nextLine();
 
-                    for (int row = 1; row < startRows; row++) {
-                        String skip = lineScanner.nextLine();
-                        String[] skipArray = skip.split(" ");
+                    for (int row = 0; row < startRows; row++) {
+                        int doubleCount = 0;
+                        int testIntCount = 0;
 
-                        for (int col = 1; col < startCols; col++) {
-                            if (lineScanner.hasNextDouble( )){
-                                lineScanner.nextDouble( );
-                            }
+                        if ( entireFileScanner.hasNextLine()) {
+                            String currentLine = entireFileScanner.nextLine();
+                            Scanner currentLineScanner = new Scanner(currentLine);
+                            for (int col = 0; col < startCols; col++) {
+                                if (currentLineScanner.hasNextInt()) {
+                                    // Debugger use
+                                    int intValue = currentLineScanner.nextInt();
+                                    testIntCount++;
+                                }
+                                
+                                else if (currentLineScanner.hasNextDouble()){
+                                    // Debugger use
+                                    double doubleValue = currentLineScanner.nextDouble();
+                                    doubleCount++;
+                                }
     
-                            else {
-                                error = lineScanner.next();
+                                else {
+                                    error = currentLineScanner.next();
+                                    throw new NumberFormatException();
+                                }
+                            }
+
+                            currentLineScanner.close();
+    
+                            if ( doubleCount != 1 ) {
+                                error = "Not exactly one double";
                                 throw new NumberFormatException();
                             }
-                        }
-                        if (lineScanner.hasNextDouble( )) {
-                            lineScanner.nextDouble( );
-                        }
     
+                            // if (originalLineScanner.hasNextDouble()) {
+                            //     originalLineScanner.nextDouble();
+                            // }
+        
+                            // else {
+                            //     error = originalLineScanner.next();
+                            //     throw new NumberFormatException();
+                            // }
+                        }
                         else {
-                            error = lineScanner.next();
-                            throw new NumberFormatException();
+                            throw new NoSuchElementException();
                         }
                     }
                 }
             }
             else {
-                return false;
+                throw new NoSuchElementException();
             }
 
-            lineScanner.close();
-            fileScanner.close();
+            entireFileScanner.close();
             return true;
 
         } catch (NoSuchElementException nsee) {
             System.out.println("No nsee Bad");
-            fileScanner.close();
+            entireFileScanner.close();
             return false;
 
         } catch (NumberFormatException nfe) {
             System.out.println("java.lang.NumberFormatException: For input string: " + "\"" + error + "\"");
-            fileScanner.close();
+            entireFileScanner.close();
             return false;
 
         } catch (Exception e) {
             System.out.println("No e Bad");
-            fileScanner.close();
+            entireFileScanner.close();
             return false;
         }
     }
