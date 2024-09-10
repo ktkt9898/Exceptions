@@ -14,7 +14,6 @@ public class FormatChecker {
     }
     public static void main(String[] args) throws FileNotFoundException {
         
-        Checker test = new Checker("invalid8.dat");
-        test.readFile("invalid8.dat");
+        Checker test = new Checker("valid1.dat");
     }
 }
