@@ -17,7 +17,7 @@ public class Checker {
      * it to the readFile method, which handles the valid file checking
      * 
      * @param fileName takes a String, that the user would have entered from the command line arguments
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException this exception is thrown is a file cannot be read
      */
     public Checker(String fileName) throws FileNotFoundException {
         readFile(fileName);
