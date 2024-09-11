@@ -75,7 +75,7 @@ public class Checker {
                                     testIntCount++;
                                 }
                                 
-                                else if (currentLineScanner.hasNextDouble()){
+                                else if (currentLineScanner.hasNext()){
                                     // Debugger use
                                     double doubleValue = currentLineScanner.nextDouble();
                                     doubleCount++;
@@ -88,6 +88,11 @@ public class Checker {
                                     entireFileScanner.close();
                                     throw new NumberFormatException();
                                 }
+                            }
+
+                            // put the conditional check here for invalid5.dat
+                            if (currentLineScanner.hasNext()) {
+                                throw new IllegalStateException(startCols + " columns were exceeded.");
                             }
                         }
 
