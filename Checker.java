@@ -47,9 +47,11 @@ public class Checker {
         // Try to create and open a file
         try {
             if (entireFileScanner.hasNextInt()) {
+                // Retrieve the fist int value in the file, which is the start row ammount
                 int startRows = entireFileScanner.nextInt();
 
                 if (entireFileScanner.hasNextInt()) {
+                    // Retrieve the first int value in the file, which
                     int startCols = entireFileScanner.nextInt();
 
                     // doubleCount will be compared to at the end of the loop
@@ -88,16 +90,16 @@ public class Checker {
                             }
                             // Reset the count for double types at the beginning of each row search
 
-                            if ( doubleCount > 1) {
-                                doubleExists = false;
-                                outputMessage = "Not exactly one double";
-                                throw new NumberFormatException();
-                            }
+                            // if ( doubleCount > 1) {
+                            //     doubleExists = false;
+                            //     outputMessage = "Not exactly one double";
+                            //     throw new NumberFormatException();
+                            // }
 
-                            else {
-                                doubleCount = 0;
-                                currentLineScanner.close();
-                            }
+                            // else {
+                            //     doubleCount = 0;
+                            //     currentLineScanner.close();
+                            // }
                         }
                         else {
                             entireFileScanner.close();
@@ -116,12 +118,22 @@ public class Checker {
                 throw new NoSuchElementException();
             }
 
+            if (entireFileScanner.hasNext() && !entireFileScanner.next().isEmpty()) {
+                throw new IllegalStateException();
+            }
+
             entireFileScanner.close();
             toString();
             return true;
 
         } catch (NoSuchElementException nsee) {
             System.out.println(nsee);
+            System.out.println("INVALID");
+            entireFileScanner.close();
+            return false;
+
+        } catch (IllegalStateException ise) {
+            System.out.println(ise);
             System.out.println("INVALID");
             entireFileScanner.close();
             return false;
