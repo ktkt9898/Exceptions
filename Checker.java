@@ -81,6 +81,7 @@ public class Checker {
                                     doubleCount++;
                                 }
     
+                                // This checks if no
                                 else {
                                     outputMessage = currentLineScanner.next();
                                     currentLineScanner.close();
@@ -88,19 +89,9 @@ public class Checker {
                                     throw new NumberFormatException();
                                 }
                             }
-                            // Reset the count for double types at the beginning of each row search
-
-                            // if ( doubleCount > 1) {
-                            //     doubleExists = false;
-                            //     outputMessage = "Not exactly one double";
-                            //     throw new NumberFormatException();
-                            // }
-
-                            // else {
-                            //     doubleCount = 0;
-                            //     currentLineScanner.close();
-                            // }
                         }
+
+                        // This checks if a row and column value were valid, but no other lines exist
                         else {
                             entireFileScanner.close();
                             throw new NoSuchElementException();
@@ -108,22 +99,28 @@ public class Checker {
                     }
                 }
 
+                // This checks if the second value from the row is anything other than int
                 else {
                     entireFileScanner.close();
                     throw new NoSuchElementException();
                 }
             }
+            
+            // This checks if the first value from the row is anything other than int
             else {
                 entireFileScanner.close();
                 throw new NoSuchElementException();
             }
 
-            if (entireFileScanner.hasNext() && !entireFileScanner.next().isEmpty()) {
-                throw new IllegalStateException();
+            // This checks the exception where more than the retrieved row and columns exist
+            if (entireFileScanner.hasNextDouble()) {
+                throw new IllegalStateException("More rows and columns exist than retrieved.");
             }
 
+
+
             entireFileScanner.close();
-            toString();
+            System.out.println(toString());
             return true;
 
         } catch (NoSuchElementException nsee) {
