@@ -54,7 +54,6 @@ public class Checker {
 
                     for (int row = 0; row < startRows; row++) {
 
-
                         if ( entireFileScanner.hasNextLine()) {
                             String currentLine = entireFileScanner.nextLine();
                             Scanner currentLineScanner = new Scanner(currentLine);
@@ -74,6 +73,8 @@ public class Checker {
     
                                 else {
                                     outputMessage = currentLineScanner.next();
+                                    doubleExists = false;
+                                    // outputMessage = "Not exactly one double";
                                     currentLineScanner.close();
                                     entireFileScanner.close();
                                     throw new NumberFormatException();
@@ -81,7 +82,7 @@ public class Checker {
                             }
                             // Reset the count for double types at the beginning of each row search
 
-                            if ( doubleCount != 1) {
+                            if ( doubleCount > 1) {
                                 doubleExists = false;
                                 outputMessage = "Not exactly one double";
                                 throw new NumberFormatException();
@@ -97,11 +98,6 @@ public class Checker {
                             throw new NoSuchElementException();
                         }
                     }
-                    // if ( doubleCount != 1 ) {
-                        
-                    //     entireFileScanner.close();
-                    //     throw new NumberFormatException();
-                    // }
                 }
             }
             else {
@@ -110,10 +106,12 @@ public class Checker {
             }
 
             entireFileScanner.close();
+            toString();
             return true;
 
         } catch (NoSuchElementException nsee) {
-            System.out.println("No such element exists");
+            System.out.println(nsee);
+            System.out.println("INVALID");
             entireFileScanner.close();
             return false;
 
@@ -123,9 +121,17 @@ public class Checker {
             return false;
 
         } catch (Exception e) {
-            System.out.println("No e Bad");
+            System.out.println(e);
+            System.out.println("INVALID");
             entireFileScanner.close();
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        String append = "";
+        append += "VALID";
+        return append;
     }
 }
