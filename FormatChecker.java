@@ -14,10 +14,10 @@ public class FormatChecker {
     }
     
     public static void main(String[] args) throws FileNotFoundException {
-        Checker test = new Checker("invalid2.dat");
-        // for (int i = 0; i < args.length; i++) {
-        //     String testingFile = args[i];
-            
-        // }
+        
+        for (String testFile : args) {
+            System.out.println(testFile);
+            Checker test = new Checker(testFile);
+        }
     }
 }

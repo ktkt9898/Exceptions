@@ -33,6 +33,14 @@ public class Checker {
         this.stringFileName = stringFileName;
 
         File fileName = new File( stringFileName );
+        try {
+            if (!fileName.exists()) {
+                throw new FileNotFoundException(fileName + " does not exist.");
+            } 
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+            return false;
+        }
 
         Scanner entireFileScanner = new Scanner( fileName );
 
@@ -73,8 +81,6 @@ public class Checker {
     
                                 else {
                                     outputMessage = currentLineScanner.next();
-                                    doubleExists = false;
-                                    // outputMessage = "Not exactly one double";
                                     currentLineScanner.close();
                                     entireFileScanner.close();
                                     throw new NumberFormatException();
@@ -99,6 +105,11 @@ public class Checker {
                         }
                     }
                 }
+
+                else {
+                    entireFileScanner.close();
+                    throw new NoSuchElementException();
+                }
             }
             else {
                 entireFileScanner.close();
@@ -116,12 +127,7 @@ public class Checker {
             return false;
 
         } catch (NumberFormatException nfe) {
-            System.out.println("java.lang.NumberFormatException: For input string: " + "\"" + outputMessage + "\"");
-            entireFileScanner.close();
-            return false;
-
-        } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(nfe);
             System.out.println("INVALID");
             entireFileScanner.close();
             return false;
