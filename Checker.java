@@ -12,8 +12,15 @@ import java.lang.NumberFormatException;
 public class Checker {
     private String stringFileName;
 
-    public Checker( String fileName ) throws FileNotFoundException {
-        readFile( fileName );
+    /**
+     * This constructor takes in a String fileName as a parameter and passes
+     * it to the readFile method, which handles the valid file checking
+     * 
+     * @param fileName takes a String, that the user would have entered from the command line arguments
+     * @throws FileNotFoundException
+     */
+    public Checker(String fileName) throws FileNotFoundException {
+        readFile(fileName);
     }
 
     /**
@@ -22,21 +29,22 @@ public class Checker {
      * the first line, and having exactly one double value in the following lines.
      * If any of these conditions are not met or illegal, the method will throw an appropriate exception.
      * 
-     * @param stringFileName
-     * @return
-     * @throws FileNotFoundException
+     * @param stringFileName takes in a String, passed from the constructor
+     * @return Returns true if a file was valid, otherwise returns false
+     * @throws FileNotFoundException first Exception check, to see if a file exists in the same directory as the program
      */
-    public boolean readFile( String stringFileName ) throws FileNotFoundException {
+    public boolean readFile(String stringFileName) throws FileNotFoundException {
         // Primer string, will eventually be concatentated with useful information
         String outputMessage = "";
 
         // Assign input parameter to soon try to be opened
         this.stringFileName = stringFileName;
 
-        File fileName = new File( stringFileName );
+        // Create a new file object with the String parameter from the method
+        File fileName = new File(stringFileName);
         try {
             if (!fileName.exists()) {
-                throw new FileNotFoundException("Error: " + fileName + " does not exist.");
+                throw new FileNotFoundException("Error. File: " + "\"" + fileName + "\"" + " does not exist.");
             } 
         } catch (FileNotFoundException e) {
             System.out.println(e);
@@ -44,7 +52,7 @@ public class Checker {
         }
 
         // Primary scanner, to open the file
-        Scanner entireFileScanner = new Scanner( fileName );
+        Scanner entireFileScanner = new Scanner(fileName);
 
         // Try to create and open a file
         try {
@@ -67,29 +75,35 @@ public class Checker {
                         throw new ExceededStartValuesException("Error: This file had more than two integers for the first line.", null);
                     }
 
+                    // Valid file will be scanned from the first int value, which serves as the row
                     for (int row = 0; row < startRows; row++) {
 
+                        // Ensure the file has contents
                         if ( entireFileScanner.hasNextLine()) {
                             String currentLine = entireFileScanner.nextLine();
                             Scanner innerLinesFileScanner = new Scanner(currentLine);
 
+                            // Valid file will be scanned from the first int value, which serves as the column
                             for (int col = 0; col < startCols; col++) {
                                 if (innerLinesFileScanner.hasNextInt()) {
-                                    // Debugger use
+                                    // Debugger use, useful to keep track of the contents within the file
                                     int intValue = innerLinesFileScanner.nextInt();
                                 }
                                 
                                 else if (innerLinesFileScanner.hasNextDouble()){
-                                    // Debugger use
+                                    // Debugger use, useful to keep track of the contents within the file
                                     double doubleValue = innerLinesFileScanner.nextDouble();
                                 }
     
                                 // This checks if neither an integer or a double was found
                                 else {
+                                    // This checks if values in the file jas reversed row and column values
+                                    // Such as 4 rows but only 3 lines, and 3 columns, but 4 values in each line
                                     if (!innerLinesFileScanner.hasNext()) {
                                         innerLinesFileScanner.close();
                                         throw new NoSuchElementException("Exceeded valid ammount of columns. Try reversing the row and column to fix.");
                                     }
+                                    // This checks if a string or character type is found, instead of an int or double
                                     else {
                                         outputMessage = innerLinesFileScanner.next();
                                         innerLinesFileScanner.close();
@@ -112,7 +126,7 @@ public class Checker {
                         else {
                             startingLineScanner.close();
                             entireFileScanner.close();
-                            throw new NoSuchElementException("Exceeded valid ammount of rows. Re-check correct row and column values.");
+                            throw new NoSuchElementException("No values exist after the first line. Recheck row and column values on the first line.");
                         }
                     }
                 }
@@ -144,27 +158,29 @@ public class Checker {
             entireFileScanner.close();
             System.out.println(toString());
             return true;
-
-        } catch (NoSuchElementException nsee) {
+        } 
+        
+        catch (NoSuchElementException nsee) {
             System.out.println(nsee);
             System.out.println("INVALID");
             entireFileScanner.close();
             return false;
+        } 
 
-        } catch (IllegalStateException ise) {
+        catch (IllegalStateException ise) {
             System.out.println(ise);
             System.out.println("INVALID");
             entireFileScanner.close();
             return false;
-
         }
+
         catch (ExceededStartValuesException esve) {
-        System.out.println(esve);
-        System.out.println("INVALID");
-        entireFileScanner.close();
-        return false;
-
+            System.out.println(esve);
+            System.out.println("INVALID");
+            entireFileScanner.close();
+            return false;
         }
+
         catch (NumberFormatException nfe) {
             System.out.println(nfe);
             System.out.println("INVALID");
@@ -173,6 +189,12 @@ public class Checker {
         }
     }
 
+    /**
+     * This method serves as a functioning toString, and is works in tandem with the
+     * readFile method signature to inform the user that a file was valid. The readFile
+     * method calls this method when all exception checks are passed, and toString() will
+     * output "VALID" to the terminal.
+     */
     @Override
     public String toString() {
         String append = "";

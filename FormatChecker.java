@@ -1,23 +1,29 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
- * This acts as the driver
+ * This class acts as the driver. It first prints out a usage message and will take
+ * command line arguments, for files to be validated.
  * 
  * @author Kyle Truschel
  */
 
 public class FormatChecker {
 
-    public static void printUsage ( ) {
+    /**
+     * This method simply prints a helpful message for the user to run the program
+     */
+    private static void printUsage ( ) {
         System.out.println("Usage: java FormatChecker <file_name>");
     }
     
     public static void main(String[] args) throws FileNotFoundException {
-        Checker test1 = new Checker("invalid8.dat");
-        // for (String testFile : args) {
-        //     System.out.println(testFile);
-        //     Checker test = new Checker(testFile);
-        // }
+        // Display how to use this program to the terminal
+        printUsage();
+
+        // Easy way to take in string arguments
+        for (String testFile : args) {
+            System.out.println(testFile);
+            Checker testChecker = new Checker(testFile);
+        }
     }
 }
