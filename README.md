@@ -34,3 +34,6 @@ After compiling, the program can be tested...
 # SOURCES
 Kount Learning Center teaching assistants Gabby and Chase
 - Troubleshooting
+
+https://www.baeldung.com/java-new-custom-exception
+- How to make custom exceptions

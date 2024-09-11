@@ -30,100 +30,117 @@ public class Checker {
         // Primer string, will eventually be concatentated with useful information
         String outputMessage = "";
 
+        // Assign input parameter to soon try to be opened
         this.stringFileName = stringFileName;
 
         File fileName = new File( stringFileName );
         try {
             if (!fileName.exists()) {
-                throw new FileNotFoundException(fileName + " does not exist.");
+                throw new FileNotFoundException("Error: " + fileName + " does not exist.");
             } 
         } catch (FileNotFoundException e) {
             System.out.println(e);
             return false;
         }
 
+        // Primary scanner, to open the file
         Scanner entireFileScanner = new Scanner( fileName );
 
         // Try to create and open a file
         try {
-            if (entireFileScanner.hasNextInt()) {
+            String startingLine = entireFileScanner.nextLine();
+
+            // Scanner meant to ONLY scan the first line, expecting only two integers
+            Scanner startingLineScanner = new Scanner(startingLine);
+            
+            if (startingLineScanner.hasNextInt()) {
                 // Retrieve the fist int value in the file, which is the start row ammount
-                int startRows = entireFileScanner.nextInt();
+                int startRows = startingLineScanner.nextInt();
 
-                if (entireFileScanner.hasNextInt()) {
+                if (startingLineScanner.hasNextInt()) {
                     // Retrieve the first int value in the file, which
-                    int startCols = entireFileScanner.nextInt();
+                    int startCols = startingLineScanner.nextInt();
 
-                    // doubleCount will be compared to at the end of the loop
-                    int doubleCount = 0;
-                    int testIntCount = 0;
-                    boolean doubleExists = true;
-
-                    // Skip trick
-                    entireFileScanner.nextLine();
+                    // This checks if anything else remains after the first two integers.
+                    if (startingLineScanner.hasNext()) {
+                        startingLineScanner.close();
+                        throw new ExceededStartValuesException("Error: This file had more than two integers for the first line.", null);
+                    }
 
                     for (int row = 0; row < startRows; row++) {
 
                         if ( entireFileScanner.hasNextLine()) {
                             String currentLine = entireFileScanner.nextLine();
-                            Scanner currentLineScanner = new Scanner(currentLine);
+                            Scanner innerLinesFileScanner = new Scanner(currentLine);
 
                             for (int col = 0; col < startCols; col++) {
-                                if (currentLineScanner.hasNextInt()) {
+                                if (innerLinesFileScanner.hasNextInt()) {
                                     // Debugger use
-                                    int intValue = currentLineScanner.nextInt();
-                                    testIntCount++;
+                                    int intValue = innerLinesFileScanner.nextInt();
                                 }
                                 
-                                else if (currentLineScanner.hasNext()){
+                                else if (innerLinesFileScanner.hasNextDouble()){
                                     // Debugger use
-                                    double doubleValue = currentLineScanner.nextDouble();
-                                    doubleCount++;
+                                    double doubleValue = innerLinesFileScanner.nextDouble();
                                 }
     
-                                // This checks if no
+                                // This checks if neither an integer or a double was found
                                 else {
-                                    outputMessage = currentLineScanner.next();
-                                    currentLineScanner.close();
-                                    entireFileScanner.close();
-                                    throw new NumberFormatException();
+                                    if (!innerLinesFileScanner.hasNext()) {
+                                        innerLinesFileScanner.close();
+                                        throw new NoSuchElementException("Exceeded valid ammount of columns. Try reversing the row and column to fix.");
+                                    }
+                                    else {
+                                        outputMessage = innerLinesFileScanner.next();
+                                        innerLinesFileScanner.close();
+                                        entireFileScanner.close();
+                                        throw new NumberFormatException("Error: " + outputMessage + " is not an integer or a double.");
+                                    }
                                 }
                             }
 
-                            // put the conditional check here for invalid5.dat
-                            if (currentLineScanner.hasNext()) {
-                                throw new IllegalStateException(startCols + " columns were exceeded.");
+                            // This checks if more columns are exceeded than retrieved from the file 
+                            if (innerLinesFileScanner.hasNext()) {
+                                innerLinesFileScanner.close();
+                                throw new IllegalStateException("More columns were exceeded than retrieved from file.");
                             }
+
+                            innerLinesFileScanner.close();
                         }
 
                         // This checks if a row and column value were valid, but no other lines exist
                         else {
+                            startingLineScanner.close();
                             entireFileScanner.close();
-                            throw new NoSuchElementException();
+                            throw new NoSuchElementException("Exceeded valid ammount of rows. Re-check correct row and column values.");
                         }
                     }
                 }
 
                 // This checks if the second value from the row is anything other than int
                 else {
+                    startingLineScanner.close();
                     entireFileScanner.close();
-                    throw new NoSuchElementException();
+                    throw new NoSuchElementException("Second value in the first line is not an integer.");
                 }
             }
             
             // This checks if the first value from the row is anything other than int
             else {
+                startingLineScanner.close();
                 entireFileScanner.close();
-                throw new NoSuchElementException();
+                throw new NoSuchElementException("First value in the first line is not an integer.");
             }
 
-            // This checks the exception where more than the retrieved row and columns exist
-            if (entireFileScanner.hasNextDouble()) {
-                throw new IllegalStateException("More rows and columns exist than retrieved.");
+            // This checks if more rows were exceeded than retrieved from the file
+            if (entireFileScanner.hasNext()) {
+                startingLineScanner.close();
+                entireFileScanner.close();
+                throw new IllegalStateException("More rows were exceeded than retrieved from file.");
             }
 
-
-
+            // If all exception checks pass, the file is considered valid.
+            startingLineScanner.close();
             entireFileScanner.close();
             System.out.println(toString());
             return true;
@@ -140,7 +157,15 @@ public class Checker {
             entireFileScanner.close();
             return false;
 
-        } catch (NumberFormatException nfe) {
+        }
+        catch (ExceededStartValuesException esve) {
+        System.out.println(esve);
+        System.out.println("INVALID");
+        entireFileScanner.close();
+        return false;
+
+        }
+        catch (NumberFormatException nfe) {
             System.out.println(nfe);
             System.out.println("INVALID");
             entireFileScanner.close();
