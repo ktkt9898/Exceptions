@@ -83,7 +83,7 @@ public class Checker {
                     for (int row = 0; row < startRows; row++) {
 
                         // Ensure the file has contents
-                        if ( entireFileScanner.hasNextLine()) {
+                        if (entireFileScanner.hasNextLine()) {
                             String currentLine = entireFileScanner.nextLine();
                             Scanner innerLinesFileScanner = new Scanner(currentLine);
 

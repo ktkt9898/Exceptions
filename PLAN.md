@@ -11,12 +11,10 @@ otherwise it will be declared invalid
 2.1 The correct format is as follows:
 The first row contains two white space separated positive integers, where the first value specifies the rows in a grid and the second value specifies the columns in a grid.
 
-Each subsequent row will contain exactly one white space separated double value in the grid column, with the remaining being integers.
+Each subsequent row will contain exactly one white space separated double value in the grid column (numbers can be assigned as a double)
 
 3. An exception should be handled starting with the most specific
-to the most general, such as two doubles in the first row (invalid
-data type), and file not found. The exception should print out
-and specify the error.
+to the most general, such as the first value in the line being a string/character, to a file not found exception.
 
 # INDIVIDUAL TASK BREAKDOWN
 1. I am planning on creating two classes, a driver and a checker class

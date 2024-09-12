@@ -15,6 +15,7 @@ public class FormatChecker {
     private static void printUsage ( ) {
         System.out.println("Usage: java FormatChecker <file_name>");
         System.out.println("\tYou may enter more than one file at once using the same syntax.");
+        System.out.println("\n");
     }
     
     public static void main(String[] args) throws FileNotFoundException {

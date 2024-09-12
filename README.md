@@ -6,7 +6,7 @@
 # ****************
 
 # OVERVIEW
-This program tests the validity of a file format in the form of exactly two integers in the first row and each subsequent row should contain exactly one double. If the format is invalid, an appropriate exception will be thrown.
+This program tests the validity of a file format in the form of exactly two integers in the first row and each subsequent row should contain one white space separated double value. If the format is invalid, an appropriate exception will be thrown.
 
 # INCLUDED FILES AND FOLDERS
 Checker.java - source file
@@ -86,7 +86,7 @@ the output will inform the user with the statement: "VALID"
 The toString() method signature acts as a way to append the "VALID" message, and is only called if the readFile passes all exception checks.
 
 # DISCUSSION
-I followed my testing plan and was relatively successfully, but there was some confusion on the test files given to us. For instance, the correct format should be two integers on the first line, and the subsequent lines should contain only one double, or none, and the rest integers... but the valid3.dat file contains two lines that have two doubles on them.
+I followed my testing plan and was relatively successfully, but there was some confusion on the test files given to us. For instance, the correct format should be two integers on the first line, and the subsequent lines should contain only one double, or none, and the rest integers... but the valid3.dat file contains two lines that have two doubles on them. I was confused at first what this meant, but in class it was specified that as long as the values in the subsequent lines are doubles (or are numbers that can be casted to a double).
 
 I enjoyed seeing how to make custom exceptions, for given scenario. It demonstrated a proper use of inheritance, since you take a broad parent class, Exception, and make a more defined specific child class, in my case I called it "ExceededStartValuesException", since I could not find a pre-made exception case in Java's documentation to handle the scenario where only two integers should be expected on the first line.
 
