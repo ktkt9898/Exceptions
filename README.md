@@ -80,10 +80,7 @@ the row ammount (The first integer in the first line)
 
 - If at anytime an exception is thrown, an appropriate message to inform the user of the error will be printed, along with the statment "INVALID".
 
-- If all checks are passed, and no exceptions are throw, the input file will be considered valid and call the toString() method and the readFile() method will return true.
-the output will inform the user with the statement: "VALID"
-
-The toString() method signature acts as a way to append the "VALID" message, and is only called if the readFile passes all exception checks.
+- If all checks are passed, and no exceptions are throw, the input file will be considered valid and the readFile() method will return true the output will inform the user with the statement: "VALID"
 
 # DISCUSSION
 I followed my testing plan and was relatively successfully, but there was some confusion on the test files given to us. For instance, the correct format should be two integers on the first line, and the subsequent lines should contain only one double, or none, and the rest integers... but the valid3.dat file contains two lines that have two doubles on them. I was confused at first what this meant, but in class it was specified that as long as the values in the subsequent lines are doubles (or are numbers that can be casted to a double).
