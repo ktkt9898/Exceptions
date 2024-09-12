@@ -12,7 +12,7 @@ public class FormatChecker {
     /**
      * This method simply prints a helpful message for the user to run the program
      */
-    private static void printUsage ( ) {
+    private static void printUsage () {
         System.out.println("Usage: java FormatChecker <file_name>");
         System.out.println("\tYou may enter more than one file at once using the same syntax.");
         System.out.println("\n");
@@ -22,7 +22,7 @@ public class FormatChecker {
         // Display how to use this program to the terminal
         printUsage();
 
-        // Easy way to take in string arguments
+        // Efficient technique to take in as many files, as arguments, as the user desires
         for (String testFile : args) {
             System.out.println(testFile);
             Checker testChecker = new Checker(testFile);
