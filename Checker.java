@@ -24,7 +24,7 @@ public class Checker {
     }
 
     /**
-     * This method essentially is a catch-all for any exception that could be thrown
+     * This method essentially serves as the main exception check procedure for any exception that could be thrown
      * when testing the validity of improper files, that not starting with exactly two integer values on
      * the first line, and having exactly one double value in the following lines.
      * If any of these conditions are not met or illegal, the method will throw an appropriate exception.
@@ -43,9 +43,12 @@ public class Checker {
         // Create a new file object with the String parameter from the method
         File fileName = new File(stringFileName);
         try {
+            // The first exception check, if a file cannot be found, either mistyped or not in the same directory
+            // throw a FileNotFoundException
             if (!fileName.exists()) {
                 throw new FileNotFoundException("Error. File: " + "\"" + fileName + "\"" + " does not exist.");
-            } 
+            }
+        // Required to complete the try-catch syntax
         } catch (FileNotFoundException e) {
             System.out.println(e);
             return false;
@@ -54,7 +57,8 @@ public class Checker {
         // Primary scanner, to open the file
         Scanner entireFileScanner = new Scanner(fileName);
 
-        // Try to create and open a file
+        // After file was successfully opened, perform various exception checks to truly see
+        // if the file is the valid format
         try {
             String startingLine = entireFileScanner.nextLine();
 
@@ -101,7 +105,7 @@ public class Checker {
                                     // Such as 4 rows but only 3 lines, and 3 columns, but 4 values in each line
                                     if (!innerLinesFileScanner.hasNext()) {
                                         innerLinesFileScanner.close();
-                                        throw new NoSuchElementException("Exceeded valid ammount of columns. Try reversing the row and column to fix.");
+                                        throw new NoSuchElementException("Error: Exceeded valid ammount of columns. Try reversing the row and column to fix.");
                                     }
                                     // This checks if a string or character type is found, instead of an int or double
                                     else {
@@ -116,7 +120,7 @@ public class Checker {
                             // This checks if more columns are exceeded than retrieved from the file 
                             if (innerLinesFileScanner.hasNext()) {
                                 innerLinesFileScanner.close();
-                                throw new IllegalStateException("More columns were exceeded than retrieved from file.");
+                                throw new IllegalStateException("Error: More columns were exceeded than retrieved from file.");
                             }
 
                             innerLinesFileScanner.close();
@@ -126,7 +130,7 @@ public class Checker {
                         else {
                             startingLineScanner.close();
                             entireFileScanner.close();
-                            throw new NoSuchElementException("No values exist after the first line. Recheck row and column values on the first line.");
+                            throw new NoSuchElementException("Error: No values exist after the first line. Recheck row and column values on the first line.");
                         }
                     }
                 }
@@ -135,7 +139,7 @@ public class Checker {
                 else {
                     startingLineScanner.close();
                     entireFileScanner.close();
-                    throw new NoSuchElementException("Second value in the first line is not an integer.");
+                    throw new NumberFormatException("Error: Second value in the first line is not an integer.");
                 }
             }
             
@@ -143,14 +147,14 @@ public class Checker {
             else {
                 startingLineScanner.close();
                 entireFileScanner.close();
-                throw new NoSuchElementException("First value in the first line is not an integer.");
+                throw new NumberFormatException("Error: First value in the first line is not an integer.");
             }
 
             // This checks if more rows were exceeded than retrieved from the file
             if (entireFileScanner.hasNext()) {
                 startingLineScanner.close();
                 entireFileScanner.close();
-                throw new IllegalStateException("More rows were exceeded than retrieved from file.");
+                throw new IllegalStateException("Error: More rows were exceeded than retrieved from the file.");
             }
 
             // If all exception checks pass, the file is considered valid.

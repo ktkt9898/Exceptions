@@ -9,11 +9,9 @@ as specified for command line arguments
 otherwise it will be declared invalid
 
 2.1 The correct format is as follows:
-The first row contains two white space separated positive integers,
-where the first value specifies the rows in a grid and the second value
-specifies the columns in a grid.
-Each subsequent row will contain exactly one white space separated
-double value in the grid column, with the remaining being integers.
+The first row contains two white space separated positive integers, where the first value specifies the rows in a grid and the second value specifies the columns in a grid.
+
+Each subsequent row will contain exactly one white space separated double value in the grid column, with the remaining being integers.
 
 3. An exception should be handled starting with the most specific
 to the most general, such as two doubles in the first row (invalid
@@ -37,4 +35,5 @@ or exactly one double should exist.
 
 # TESTING PLAN
 I will start by testing invalid values first, since they are likely the most easy to catch, ex. if a double exists more than twice in a line, the file is automatically invalid.
+
 I will also utilize the debugger since I can see exactly where the compiler is grabbing values to ensure the appropriate exception is thrown.
