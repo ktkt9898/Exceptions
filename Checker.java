@@ -53,7 +53,7 @@ public class Checker {
             // in the same directory
             // throw a FileNotFoundException
             if (!fileName.exists()) {
-                throw new FileNotFoundException("Error. File: " + "\"" + fileName + "\"" + " does not exist.");
+                throw new FileNotFoundException("Error. File: " + "\"" + fileName + "\"" + " does not exist." + "\n" + "INVALID");
             }
             // Required to complete the try-catch syntax
         } catch (FileNotFoundException e) {
@@ -175,34 +175,34 @@ public class Checker {
             // If all exception checks pass, the file is considered valid.
             startingLineScanner.close();
             entireFileScanner.close();
-            System.out.println("VALID");
+            System.out.println("VALID" + "\n");
             return true;
         }
 
         catch (NoSuchElementException nsee) {
             System.out.println(nsee);
-            System.out.println("INVALID");
+            System.out.println("INVALID" + "\n");
             entireFileScanner.close();
             return false;
         }
 
         catch (IllegalStateException ise) {
             System.out.println(ise);
-            System.out.println("INVALID");
+            System.out.println("INVALID" + "\n");
             entireFileScanner.close();
             return false;
         }
 
         catch (ExceededStartValuesException esve) {
             System.out.println(esve);
-            System.out.println("INVALID");
+            System.out.println("INVALID" + "\n");
             entireFileScanner.close();
             return false;
         }
 
         catch (NumberFormatException nfe) {
             System.out.println(nfe);
-            System.out.println("INVALID");
+            System.out.println("INVALID" + "\n");
             entireFileScanner.close();
             return false;
         }
