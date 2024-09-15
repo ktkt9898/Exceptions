@@ -53,7 +53,8 @@ public class Checker {
             // in the same directory
             // throw a FileNotFoundException
             if (!fileName.exists()) {
-                throw new FileNotFoundException("Error. File: " + "\"" + fileName + "\"" + " does not exist." + "\n" + "INVALID");
+                throw new FileNotFoundException("Error. File: " + "\"" + fileName + "\""
+                        + " does not exist. Re-check spelling and file location." + "\n" + "INVALID" + "\n");
             }
             // Required to complete the try-catch syntax
         } catch (FileNotFoundException e) {

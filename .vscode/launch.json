@@ -9,6 +9,13 @@
             "name": "FormatChecker",
             "request": "launch",
             "mainClass": "FormatChecker",
+            "projectName": "Exceptions_f1818580"
+        },
+        {
+            "type": "java",
+            "name": "FormatChecker",
+            "request": "launch",
+            "mainClass": "FormatChecker",
             "projectName": "Exceptions-3_97362b26"
         },
         {
