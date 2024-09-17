@@ -29,8 +29,8 @@ public class Checker {
      * This method essentially serves as the main exception check procedure for any
      * exception that could be thrown
      * when testing the validity of improper files, that not starting with exactly
-     * two integer values on
-     * the first line, and having exactly one double value in the following lines.
+     * two integer values on the first line, and having a double or integer on the
+     * follow lines (no string or characters or other)
      * If any of these conditions are not met or illegal, the method will throw an
      * appropriate exception.
      * 
