@@ -27,10 +27,10 @@ After compiling, the program can be used to test the validity of files, that is 
 Where <file_name> is the desired file to check. Note that the files must be in the same directory as this program.
 
 For example, an invalid file looks like:
-2 2 3
+4 5 3
 3 4
 
-Because the first two values must be integers but cannot exceed more than two. If this file was called "testfile" and ran using:
+Because the first two values must be integers but cannot exceed more than two integers on the same line. If this file was called "testfile" and ran using:
 
 # java FormatChecker testfile
 
